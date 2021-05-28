@@ -1,5 +1,6 @@
 var game_stage = 1;
 var gamelist = [];
+var buttons = []
 
 gameReady();
 
@@ -7,7 +8,7 @@ gameReady();
 function gameReady() {
 
   $(document).keypress(function(event) {
-    debugger;
+
     if (event.key === "A" || event.key === "a") {
       gameStart();
     }
@@ -15,18 +16,27 @@ function gameReady() {
 }
 
 function gameStart() {
-  $("#level-title").text("Level" + game_stage);
+  $("#level-title").text("Level " + game_stage);
+  makeQuiz();
+  //checkAnswer();
+
+}
+
+function makeQuiz() {
   var num = makeRandomNum();
-  gamelist.aapend(num);
+  gamelist.push(num);
+
   makeSound(num);
 
+}
+
+function checkAnswer() {
   var temp_list = gamelist;
-  while(temp_list.length>0){
-    $(document).click(function(){
-      switch(this.)
+  while (temp_list.length > 0) {
+    $(document).click(function() {
+
     })
   }
-
 }
 
 function makeRandomNum() {
@@ -34,20 +44,37 @@ function makeRandomNum() {
 }
 
 function makeSound(value) {
+  //debugger;
   switch (value) {
     case 0:
+      $(".blue").addClass("pressed");
+      setTimeout(function() {
+        $(".blue").removeClass("pressed");
+      }, 1000);
       var audio = new Audio("sounds/blue.mp3");
       audio.play();
       break;
     case 1:
+      $(".green").addClass("pressed");
+      setTimeout(function() {
+        $(".green").removeClass("pressed");
+      }, 1000);
       var audio = new Audio("sounds/green.mp3");
       audio.play();
       break;
     case 2:
+      $(".red").addClass("pressed");
+      setTimeout(function() {
+        $(".red").removeClass("pressed");
+      }, 1000);
       var audio = new Audio("sounds/red.mp3");
       audio.play();
       break;
     case 3:
+      $(".yellow").addClass("pressed");
+      setTimeout(function() {
+        $(".yellow").removeClass("pressed");
+      }, 1000);
       var audio = new Audio("sounds/yellow.mp3");
       audio.play();
       break;
