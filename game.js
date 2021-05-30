@@ -2,16 +2,16 @@ let buttonColours = ["red", "blue", "green", "yellow"];
 let gamePattern = [];
 let userClickedPattern = [];
 let gamestart = false;
+let gamerestart = false;
 let level = 0;
 
 
 $(document).on("keypress", function(event) {
-  if (event.key === "a" || event.key === "A") {
-    if (gamestart === false) {
-      userHandler();
-      nextSequence();
-      gamestart = true;
-    }
+  if ( (gamestart === false && (event.key === "a" || event.key === "A")) || gamerestart === true) {
+    event.stopImmediatePropagation();
+    userHandler();
+    nextSequence();
+    gamestart = true;
   }
 })
 
@@ -57,6 +57,7 @@ function userHandler() {
   $(".btn").on("click", function(event) {
     userClickedPattern.push($(this).attr("id")); //dom에서 $() 해주면 jquery object
     //여기서는 event로 id를 가져올수없다 왜냐하면 event 는 해당 click 이벤트에대한 object이고, this는 그걸 trigger한 HTMLObject임
+    event.stopImmediatePropagation(); //bubbling 효가. 해당 이벤트가 부모에서 자식까지 전달되기떄문에, stopPropagation으로 전파막음
     makeSound(this.id);
     animatePress(this);
     console.log(userClickedPattern);
@@ -95,7 +96,8 @@ function startOver() {
   while (userClickedPattern.length > 0) {
     userClickedPattern.pop();
   }
-  gamestart = false;
+  gamerestart = true;
+
 }
 
 function checkAnswer(stage) {
